@@ -7,7 +7,7 @@ import Icon from "react-native-vector-icons/dist/FontAwesome";
 
 class GroupScreen extends Component {
   state = {
-    description: "",
+    description: "add description here",
   };
 
   componentDidMount() {
