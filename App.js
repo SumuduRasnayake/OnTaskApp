@@ -5,31 +5,29 @@
  * @format
  * @flow
  */
-import React, {Component} from 'react';
-import DrawerNavigator from './Utils/DrawerNavigator'
-import {
-  createAppContainer
-} from 'react-navigation';
-import axios from 'axios'
-import AsyncStorage from "@react-native-community/async-storage"
 
-axios.defaults.baseURL='http://192.168.1.100:8080/api'
+import React from 'react';
+import { createAppContainer } from 'react-navigation';
+import StackNavigator from './src/utils/StackNavigator'
+import axios from 'axios'
+import AsyncStorage from '@react-native-community/async-storage';
+ 
+axios.defaults.baseURL = 'https://ontask.pagekite.me/api'
+console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
+console.disableYellowBox = true;
 
 axios.interceptors.request.use(
-  async config => {
-    const token = await AsyncStorage.getItem('token')
-    if (token) {
-      config.headers.Authorization = "Bearer "+token
+    async config => {
+      const token = await AsyncStorage.getItem('token')
+      if (token) {
+        config.headers.Authorization = "Bearer "+token
+      }
+      return config
+    },
+    error => {
+      return Promise.reject(error)
     }
-    console.log("Hey")
-    return config
-  },
-  error => {
-    return Promise.reject(error)
-  }
-);
+  );
 
-const App = createAppContainer(DrawerNavigator);
-
-export default App;
+export default createAppContainer(StackNavigator);
 
